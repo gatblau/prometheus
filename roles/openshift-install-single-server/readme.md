@@ -1,4 +1,4 @@
-# Origin Server
+# Installs OpenShift in a single server
 
 ## Overview
 

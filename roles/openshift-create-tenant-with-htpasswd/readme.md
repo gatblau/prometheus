@@ -1,4 +1,4 @@
-# Create a Tenant using HTPASSWD
+# Creates a Tenant space using HTPASSWD
 
 ## Overview
 
