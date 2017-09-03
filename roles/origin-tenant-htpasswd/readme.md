@@ -1,8 +1,8 @@
-# Origin Tenant using HTPASSWD
+# Create a Tenant using HTPASSWD
 
 ## Overview
 
-This roles creates an Openshift tenant: a set of namespaces representing environments for a given application.
+This roles creates a set of namespaces representing environments for a given application.
 The various namespaces (for example development, testing, demo, etc.) form the basis of a Continuous Delivery pipeline.
 
 ## Context of use 
@@ -16,6 +16,7 @@ Use this role when you need to create a tenant space that development staff can 
 - Users of a namespace can be either in admin or basic-user roles. 
 - One tenant-admin account across all namespaces.
 - Auto-generated passwords of specified lengths kepts in hashed format by htpasswd.
+- Resource quotas applied to each namespace.
 
 ## Configuration
 
