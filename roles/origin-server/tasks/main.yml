@@ -17,18 +17,18 @@
 
 - name: Downloading the OpenShift Origin installation file
   get_url:
-    url: "{{ ocp_uri }}/{{ ocp_filename }}"
-    dest: "{{ ocp_root }}/{{ ocp_filename }}"
+    url: "{{ ocp_uri }}/{{ ocp_folder }}.tar.gz"
+    dest: "{{ ocp_root }}/{{ ocp_folder }}.tar.gz"
     mode: 0755
 
 - name: Unarchiving the installation file
   unarchive:
-    src: "{{ ocp_root }}/{{ ocp_filename }}"
+    src: "{{ ocp_root }}/{{ ocp_folder }}.tar.gz"
     dest: "{{ ocp_root }}"
 
 - name: Removing the installation file
   file:
-    name: "{{ ocp_path }}/{{ ocp_filename }}"
+    name: "{{ ocp_path }}/{{ ocp_folder }}.tar.gz"
     state: absent
 
 - name: Copying the Openshift systemd unit
