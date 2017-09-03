@@ -13,6 +13,8 @@ Use this role when you need to have a simple server side environment to play wit
 - TLS enabled docker registry
 - Router
 - Self-provisioning disabled
+- HTPASSWD identity provider 
+- Admin user and ssh keys created 
 
 ## Configuration
 
@@ -21,4 +23,5 @@ Use this role when you need to have a simple server side environment to play wit
 |  ocp_uri |  The URI used to download the origin server binary file. | [https://github.com/openshift/origin/releases/download/v3.6.0](https://github.com/openshift/origin/releases/download/v3.6.0)  |   
 |  ocp_root |  The name of the root folder where ocp will be installed on the traget host | "/usr/local/opemshift"  |   
 |  ocp_folder | The name of the openshift tarball to download without extension. | openshift-origin-server-v3.6.0-c4dd4cf-linux-64bit |
- 
+| admin_user | the user that has system:admin access to OpenShift on the host. ||
+

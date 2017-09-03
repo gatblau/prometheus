@@ -61,7 +61,7 @@
 
 - name: Adding the {{ admin_user }} user, setting user on the shell and creating a 2048-bit SSH key in ~{{ admin_user }}/.ssh/id_rsa
   user:
-    name: admin
+    name: "{{ admin_user }}"
     groups: wheel
     shell: /bin/bash
     generate_ssh_key: yes
