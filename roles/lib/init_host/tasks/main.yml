@@ -1,0 +1,23 @@
+---
+- name: Checking Docker pre-requisites
+  include: "init_docker.yml"
+  when: tgt_platform == "docker"
+
+- name: Launching Docker hosts
+  include: "{{ playbook_dir }}/init_host/docker.yml"
+  with_vars:
+    playbook_dir: "{{ playbook_dir }}"
+  when: tgt_platform == "docker"
+
+- name: Initialise Virtual Machine hosts
+  include: "{{ playbook_dir }}/init_host/vm.yml"
+  with_vars:
+    playbook_dir: "{{ playbook_dir }}"
+  when: tgt_platform == "vm"
+
+- name: Initialise AWS EC2 hosts
+  include: "{{ playbook_dir }}/init_host/aws_ec2.yml"
+  with_vars:
+    playbook_dir: "{{ playbook_dir }}"
+  when: tgt_platform == "ec2"
+...

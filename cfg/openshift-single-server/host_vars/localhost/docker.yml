@@ -1,0 +1,7 @@
+---
+# Base image for Docker container
+docker_base_image: "gatblau.org/centos:7guest"
+
+# Comma separated list of ports to open, e.g. "80,8080,8081"
+host1_ports: "8443"
+...

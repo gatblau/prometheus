@@ -1,0 +1,7 @@
+---
+- name: Opening port "{{ port_number }}"
+  command: 'firewall-cmd --permanent --add-port={{ port_number }}/tcp'
+
+- name: Reloading the firewall settings
+  command: 'firewall-cmd --reload'
+...

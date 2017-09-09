@@ -1,0 +1,11 @@
+---
+# This file contains variables common to all hosts in the "managed" group.
+
+# Remote user for Ansible to connect to VMs as:
+#ansible_remote_user: "{{ hostvars['localhost']['ansible_remote_user'] }}"
+
+# Variables are set by the localhost when the target platform is provisioned
+base_os:    "{{ hostvars['localhost']['base_os'] }}"
+become:     "{{ hostvars['localhost']['become'] }}"
+connection: "{{ hostvars['localhost']['connection'] }}"
+...

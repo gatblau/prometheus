@@ -1,0 +1,16 @@
+# Usage:
+#
+# - include_role:
+#     name: lib/manifest
+#     tasks_from: add-port
+#     vars:
+#       app_name: <application-name>
+#       app_port: <port-number>
+#
+---
+- name: Adding port number to {{ app_name }} manifest
+  lineinfile:
+    dest: "{{ manifest_folder }}{{ manifest_file }}"
+    insertafter: "{{ app_name }}_ports"
+    line: "{{ app_port }}"
+...

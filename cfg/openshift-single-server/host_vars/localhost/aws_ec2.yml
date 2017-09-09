@@ -1,0 +1,13 @@
+---
+# This file contains variables for Amazon AWS EC2 instances.
+project_group:       project
+tag_name:            project
+
+ec2_region: eu-west-2     # For list of regions, see: http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region
+ec2_vpc_subnet: subnet-123456
+ec2_zone: eu-west-1b
+
+openshift_host_type: t2.micro
+
+openshift_host_image:         ami-8b8c57f8  # RHEL 7.2
+...

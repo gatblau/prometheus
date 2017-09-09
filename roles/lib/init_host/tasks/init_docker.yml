@@ -1,0 +1,25 @@
+---
+- name: Building the base Docker image (CentOS 7)
+  docker_image:
+    name: "gatblau.org/centos"
+    tag:  "7guest"
+    path: "../lib/docker/centos7"
+  when: base_os == "centos7"
+
+- name: Deleting previous Docker containers
+  become: yes
+  docker_container:
+    name:  "{{ item }}"
+    image: "{{ docker_base_image }}"
+    state: absent
+    force_kill: true
+  with_items: "{{ groups['managed'] }}"
+
+- name: Switching to the Docker connection plugin
+  set_fact:
+    connection: "docker"
+    become: "no"
+
+- name: Launching Docker hosts
+  include: "{{ playbook_dir }}/init-hosts-docker.yml"
+...

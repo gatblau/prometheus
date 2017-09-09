@@ -1,0 +1,8 @@
+[local]
+localhost
+
+[managed:children]
+openshift-group
+
+[openshift-group]
+openshift

@@ -1,0 +1,8 @@
+---
+# This file contains variables for the control node and managed hosts
+
+become:     "{{ hostvars['localhost']['become'] }}"
+connection: "{{ hostvars['localhost']['connection'] }}"
+
+cache_folder: "/var/cache/projects"
+...

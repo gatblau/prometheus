@@ -1,0 +1,30 @@
+---
+- name: Getting {{ rpm_app_name | capitalize }} package name
+  set_fact:
+    rpm_package: "{{ rpm_filename | replace('.rpm', '') }}"
+
+- name: Checking if {{ rpm_app_name | capitalize }} installed
+  command: "yum list installed {{ rpm_package }} warn=no"
+  failed_when: false
+  changed_when: false
+  no_log: true
+  register: result
+
+- block:
+  - name: Copying {{rpm_app_name|capitalize}} to the host
+    copy:
+      src: "{{ cache_folder }}/{{rpm_filename}}"
+      dest: "/tmp/{{rpm_filename}}"
+
+  - name: Installing {{rpm_filename}} file
+    yum:
+      name: "/tmp/{{rpm_filename}}"
+      state: present
+
+  - name: Removing the {{rpm_filename}} file after installation
+    file:
+      name: "/tmp/{{rpm_filename}}"
+      state: absent
+
+  when: result.rc != 0
+...

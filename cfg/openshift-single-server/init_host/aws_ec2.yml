@@ -1,0 +1,62 @@
+---
+# See host_vars/localhost/aws-ec2-vars.yml for variables
+
+- name: Create a security group
+  include_role:
+    name: lib/aws/ec2
+    tasks_from: new-security-group
+  vars:
+    group_module: "ec2_group"
+    group_name:   "{{ project_group }}"
+    group_description: "Ansible skeleton project"
+    group_region: "{{ ec2_region }}"
+
+- name: Launching EC2 hosts
+  include_role:
+    name: lib/aws/ec2
+    tasks_from: launch-host
+  vars:
+    ec2_module:     "ec2"
+    ec2_user:       "ec2user"
+    ec2_group:      "{{ project_group }}"
+    ec2_instance:   "{{ item.instance }}"
+    ec2_image:      "{{ item.image }}"
+    ec2_region:     "{{ ec2_region }}"
+    ec2_zone:       "{{ zone }}"
+    ec2_vpc_subnet: "{{ ec2_vpc_subnet }}"
+    ec2_tag:        "{{ tag_name }}"
+  with_items:
+    - {name: "openshift", instance: "{{ openshift_host_type }}", image: "{{ openshift_host_image }}" }
+  register: hosts
+
+- name: Waiting for EC2 hosts to initialise
+  include_role:
+    name: lib/aws/ec2
+    tasks_from: wait-for-host
+  vars:
+    ec2_public_ip: "{{ item.instances }}"
+  with_items: hosts.results
+
+- name: Tagging EC2 hosts
+  include_role:
+    name: lib/aws/ec2
+    tasks_from: tag-host
+  vars:
+    ec2_instance: "{{ item.instances }}"
+    ec2_tag: "{{ tag_name }}"
+  with_items: hosts.result
+  loop_control:
+    loop_var: ec2_host
+
+- name:  Adding AWS EC2 hosts and set variables for deployment
+  add_host:
+    groups: "{{ project_group }}"
+    hostname: "{{ item }}"
+    ansible_host: "{{ item.instances[0].public_dns_name }}"
+    ansible_ssh_private_key_file: "keys/ec2user.pem"
+    ansible_user: "ec2user"
+    ansible_port: 22
+    become: "yes"
+    connection: "ssh"
+  with_items: hosts.results
+...

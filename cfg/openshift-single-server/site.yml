@@ -1,0 +1,23 @@
+---
+- name: Initialising managed hosts
+  hosts: local
+  connection: local
+  become: no
+  roles:
+    - lib/init-host
+
+- name: Installing baseline requirements
+  hosts: managed
+  connection: "{{ connection }}"
+  become: "{{ become }}"
+  roles:
+    - baseline
+
+- name: Install database
+  hosts: openshift
+  connection: "{{ connection }}"
+  become: "{{ become }}"
+  roles:
+    - openshift/deploy/service
+    - openshift/cfg/provider/htpasswd
+...

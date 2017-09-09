@@ -1,0 +1,18 @@
+---
+- name: Setting variables for VM build
+  set_fact:
+    become: "yes"
+    connection: "ssh"
+
+- name: Adding managed hosts
+  add_host:
+    groups: managed
+    hostname: "{{ item.name }}"
+    ansible_host: "{{ item.host }}"
+    ansible_user: "{{ ansible_remote_user }}"
+    ansible_port: 22
+    become: "{{ become }}"
+    connection: "{{ connection }}"
+  with_items:
+    - { name: "openshift", host: "{{ openshift_host_ip }}" }
+...

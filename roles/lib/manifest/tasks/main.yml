@@ -1,0 +1,33 @@
+---
+- name: Checking if the manifest already exists
+  stat:
+    path: "{{ manifest_folder }}{{ manifest_file }}"
+  register: exists
+
+- block: # Manifest does not exist - create it
+  - name: Creating the manifest folder
+    file:
+      path: "{{ manifest_folder }}"
+      state: directory
+      mode: 0755
+
+  - name: Creating the manifest file
+    template:
+      src: "{{ manifest_file }}.j2"
+      dest: "{{ manifest_folder }}{{ manifest_file }}"
+      mode: 0644
+  when: exists.stat.exists == False # end block Create deployment manifest
+
+- name: Updating environment (Docker only)
+  include: update_env.yml
+  when: connection == "docker"
+
+- name: Incrementing the deployment number
+  include: inc_deployment.yml
+
+- name: Adding configuration {{ configuration }} to manifest
+  lineinfile:
+    dest: "{{ manifest_folder }}{{ manifest_file }}"
+    insertafter: "  configuration:"
+    line: "    - {{ configuration }} - {{ ansible_date_time.date }} {{ ansible_date_time.time }}"
+...

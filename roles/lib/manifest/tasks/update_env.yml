@@ -1,0 +1,14 @@
+# This play will update the environment name with the ansible_hostname
+#
+# Usage:
+#
+# - include_role:
+#     name: lib/manifest
+#     tasks_from: update-env
+#
+- name: Updating the environment name
+  replace:
+    dest: "{{ manifest_folder }}{{ manifest_file }}"
+    regexp: '^(.*)environment:(.*)$'
+    replace: "  environment: {{ ansible_hostname }}"
+...

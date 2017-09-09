@@ -1,0 +1,22 @@
+# Usage:
+#
+# - include_role:
+#     name: lib/manifest
+#     tasks_from: increment-deployment
+#
+---
+- name: Get deployment number
+  shell: 'grep "  deployment:" {{ manifest_folder }}{{ manifest_file }} | grep -oE "([0-9]*)"'
+  changed_when: false
+  register: result
+
+- name: Increment deployment number
+  set_fact:
+    count: "{{ result.stdout | int + 1 }}"
+
+- name: Update deployment count in manifest
+  lineinfile:
+    dest: "{{ manifest_folder }}{{ manifest_file }}"
+    regexp: '^(.*)deployment: (.*)'
+    line:   '  deployment: {{ count }}'
+...

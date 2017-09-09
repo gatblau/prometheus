@@ -1,0 +1,4 @@
+---
+manifest_folder: "/usr/local/manifest/"
+manifest_file:   "manifest.yml"
+manifest_enabled: true

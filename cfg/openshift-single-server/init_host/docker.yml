@@ -1,0 +1,25 @@
+- name: Start up privileged Docker containers
+  include_role:
+    name: lib/docker
+    tasks_from: start-privileged
+  vars:
+    container_name: "{{ item.name }}"
+    container_hostname: "{{ item.hostname }}"
+    container_image: "{{ docker_base_image }}"
+    container_ports: "{{ item.ports }}"
+  with_items:
+    - { name: "host1", hostname: "host1", ports: "{{ host1_ports }}" }
+    - { name: "host4", hostname: "host4", ports: "{{ host4_ports }}" }
+
+- name: Start up standard Docker containers
+  include_role:
+    name: lib/docker
+    tasks_from: start
+  vars:
+    container_name: "{{ item.name }}"
+    container_hostname: "{{ item.hostname }}"
+    container_image: "{{ docker_base_image }}"
+    container_ports: "{{ item.ports }}"
+  with_items:
+    - { name: "host2", hostname: "host2", ports: "{{ host2_ports }}" }
+    - { name: "host3", hostname: "host3", ports: "{{ host3_ports }}" }

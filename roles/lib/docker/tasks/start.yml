@@ -1,0 +1,28 @@
+# This play starts a Docker container
+#
+# Usage:
+#
+# - include_role:
+#     name: lib/docker
+#     tasks_from: start
+#     vars:
+#       container_name:     <name>
+#       container_image:    <image>
+#       container_hostname: <hostname>
+#       container_ports:    <ports>
+---
+- name: Starting up Docker container {{ container_name }}
+  docker_container:
+    name:     "{{ container_name }}"
+    image:    "{{ container_image }}"
+    hostname: "{{ container_hostname }}"
+    detach: yes
+    tty: yes
+    command: "sleep infinity"
+    state: started
+    exposed_ports: "[ {{ container_ports }} ]"
+    privileged: no
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/cache/yum:/var/cache/yum:rw
+...

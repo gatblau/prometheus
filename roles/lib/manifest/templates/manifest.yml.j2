@@ -1,0 +1,8 @@
+---
+- name: Deployment Manifest
+  environment: "{{ ansible_hostname }}"
+  deployment: 0
+  date: "{{ ansible_date_time.date }} {{ ansible_date_time.time }}"
+  configuration:
+  manifest:
+...

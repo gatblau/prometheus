@@ -1,0 +1,20 @@
+# Usage:
+#
+# - include_role:
+#     name: lib/manifest
+#     tasks_from: add-deployment
+#     vars:
+#       deployment: <deployment string>
+#
+# Deployment string consists of the application name, version and a placeholder for the ports.
+#   Note: spaces are required to maintain YAML indentation and newlines (\n) are also required.
+# For example, for MySQL:
+#  "    - app_name: MySQL\n        mysql_version: {{ hostvars['localhost']['mysql_version'] }}\n        mysql_ports:"
+#
+---
+- name: Adding deployment to manifest
+  lineinfile:
+    dest: "{{ manifest_folder }}{{ manifest_file }}"
+    insertbefore: "..."
+    line: "{{ deployment }}"
+...
