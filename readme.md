@@ -4,4 +4,4 @@
 
 ## Overview
 
-Prometheus is an Ansible roles library to enable a single API to automate an entire cloud platform.
+Prometheus is hybrid cloud automation library and API.
