@@ -1,6 +1,6 @@
 # Prometheus
 
-<img src="lib/pic/prometheus.png" width="300" height="300" align="right">
+<img src="lib/pic/prometheus.png" width="200" height="200" align="right">
 
 ## Overview
 
